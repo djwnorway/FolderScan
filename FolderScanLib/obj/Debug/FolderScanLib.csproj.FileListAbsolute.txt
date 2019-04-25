@@ -1,0 +1,6 @@
+C:\MyProjects\FolderScan\FolderScanLib\bin\Debug\FolderScanLib.dll
+C:\MyProjects\FolderScan\FolderScanLib\bin\Debug\FolderScanLib.pdb
+C:\MyProjects\FolderScan\FolderScanLib\obj\Debug\FolderScanLib.csprojResolveAssemblyReference.cache
+C:\MyProjects\FolderScan\FolderScanLib\obj\Debug\FolderScanLib.csproj.CoreCompileInputs.cache
+C:\MyProjects\FolderScan\FolderScanLib\obj\Debug\FolderScanLib.dll
+C:\MyProjects\FolderScan\FolderScanLib\obj\Debug\FolderScanLib.pdb
