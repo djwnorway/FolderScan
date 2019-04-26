@@ -42,7 +42,11 @@
   <ItemGroup>
     <Compile Include="FolderScan.cs" />
     <Compile Include="FolderScanConsole.cs" />
+    <Compile Include="Interfaces\IFolderScan.cs" />
+    <Compile Include="Interfaces\IResultsLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultsConsoleLogger.cs" />
+    <Compile Include="ResultsFileLogger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

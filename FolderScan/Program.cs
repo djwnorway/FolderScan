@@ -13,7 +13,9 @@ namespace FolderScanApp
         static void Main(string[] args)
         {
             var folderScan = new FolderScanConsole();
-            folderScan.Run();
+            folderScan.Run(Logging.File);
+
+            Console.WriteLine("\n\nResults have been successfully logged. Thanks!\n");
         }        
     }
 }
