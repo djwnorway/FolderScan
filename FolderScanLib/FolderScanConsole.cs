@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace FolderScanLib
 {
+    public enum Logging
+    {
+        Console = 1,
+        File = 2
+    }
+
     /// <summary>
     /// Retrieves user input and writes results via the console. 
     /// Additional processing logic occurs here to get results from FolderScan objects
@@ -17,27 +23,36 @@ namespace FolderScanLib
         private string Folder2 { get; set; }
         private List<string> Folder1Only { get; set; }
         private List<string> Folder2Only { get; set; }
+        private StringBuilder Results { get; set; }
+        private Logging LoggingMechanism { get; set; }
+        private IResultsLogger resultsLogger;
 
         public FolderScanConsole()
         {
             Folder1 = string.Empty;
             Folder2 = string.Empty;
+            Results = new StringBuilder();
         }
 
-        public void Run()
+        public void Run(Logging logType = Logging.Console)
         {
+            LoggingMechanism = logType;
             GetUserInput();
             DoFolderScan();
-            ShowResults();
+            PopulateResultsForDisplay();
+
+            resultsLogger = GetResultsLogger();
+            resultsLogger.LogResults(Results.ToString());
         }
 
         private void GetUserInput()
         {
+            
             Console.WriteLine("Please enter the file path for folder 1: ");
             Folder1 = Console.ReadLine();
 
             Console.WriteLine("Please enter the file path folr folder 2: ");
-            Folder2 = Console.ReadLine();
+            Folder2 = Console.ReadLine();            
         }
 
         private void DoFolderScan()
@@ -47,19 +62,19 @@ namespace FolderScanLib
             Folder2Only = missingFolders.Item2;
         }
 
-        private void ShowResults()
+        private void PopulateResultsForDisplay()
         {
-            InsertNewLines(5);
+            if (LoggingMechanism == Logging.Console) InsertNewLines(5);
 
             //DIRECTORY(aka FOLDER) 1
-            Console.WriteLine($"DIRECTORY 1 RESULTS '{Folder1}'");
-            Console.WriteLine($"All folders in directory 1 that are NOT in directory 2:");
+            Results.AppendLine($"DIRECTORY 1 RESULTS '{Folder1}'");
+            Results.AppendLine($"All folders in directory 1 that are NOT in directory 2:");
             PrintSubFolderResults(Folder1Only);
             InsertNewLines(4);
 
             //DIRECTORY(aka FOLDER) 2
-            Console.WriteLine($"DIRECTORY 2 RESULTS '{Folder2}'");
-            Console.WriteLine($"All folders in directory 2 that are NOT in directory 1:");
+            Results.AppendLine($"DIRECTORY 2 RESULTS '{Folder2}'");
+            Results.AppendLine($"All folders in directory 2 that are NOT in directory 1:");
             PrintSubFolderResults(Folder2Only);
             InsertNewLines(2);
         }
@@ -68,17 +83,31 @@ namespace FolderScanLib
         {
             for (int i = 0; i < subFolders.Count(); i++)
             {
-                Console.WriteLine($" {i + 1}) {subFolders[i]}");
+                Results.AppendLine($" {i + 1}) {subFolders[i]}");
             }
         }
 
         private void InsertNewLines(int numberOfNewLines)
-        {
+        { 
             if (numberOfNewLines < 0) return;
             for (int i = 0; i < numberOfNewLines; i++)
             {
-                Console.WriteLine();
+                Results.AppendLine(string.Empty);
             }
+        }
+
+        private IResultsLogger GetResultsLogger()
+        {            
+            if (LoggingMechanism == Logging.Console) 
+            {
+                return new ResultsConsoleLogger();
+            }
+            else if (LoggingMechanism == Logging.File)
+            {
+                return new ResultsFileLogger();
+            }
+
+            return null;
         }
     }
 }
