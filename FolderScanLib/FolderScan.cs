@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FolderScanLib
 {
 
-    internal class FolderScan
+    internal class FolderScan : IFolderScan
     {
         /// <summary>
         /// Returns two lists. 
@@ -18,7 +18,7 @@ namespace FolderScanLib
         /// <param name="folder1"></param>
         /// <param name="folder2"></param>
         /// <returns></returns>
-        public static Tuple<List<string>, List<string>> GetMissingFolders(string folder1, string folder2)
+        public Tuple<List<string>, List<string>> GetMissingFolders(string folder1, string folder2)
         {
             var folder1SubFolders = GetListOfSubFolders(folder1);
             var folder2SubFolders = GetListOfSubFolders(folder2);
@@ -34,7 +34,7 @@ namespace FolderScanLib
         /// </summary>
         /// <param name="path"></param>
         /// <returns>List<string></returns>
-        private static List<string> GetListOfSubFolders(string path)
+        private List<string> GetListOfSubFolders(string path)
         {
             var directories = new DirectoryInfo(path).GetDirectories();
             List<string> subFolders = new List<string>();

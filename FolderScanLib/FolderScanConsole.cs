@@ -41,8 +41,8 @@ namespace FolderScanLib
         }
 
         private void DoFolderScan()
-        {
-            var missingFolders = FolderScan.GetMissingFolders(Folder1, Folder2);
+        {            
+            var missingFolders = new FolderScan().GetMissingFolders(Folder1, Folder2);
             Folder1Only = missingFolders.Item1;
             Folder2Only = missingFolders.Item2;
         }
