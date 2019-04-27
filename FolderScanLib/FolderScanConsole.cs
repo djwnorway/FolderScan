@@ -13,6 +13,12 @@ namespace FolderScanLib
         File = 2
     }
 
+    public enum Mode
+    {
+        HardDrive = 1,
+        OneDrive = 2
+    }
+
     /// <summary>
     /// Retrieves user input and writes results via the console. 
     /// Additional processing logic occurs here to get results from FolderScan objects
@@ -25,7 +31,9 @@ namespace FolderScanLib
         private List<string> Folder2Only { get; set; }
         private StringBuilder Results { get; set; }
         private Logging LoggingMechanism { get; set; }
-        private IResultsLogger resultsLogger;
+        private IResultsLogger resultsLogger;       
+        private Mode ProgramMode { get; set; }
+        private IFolderScan FolderScan { get; set; }
 
         public FolderScanConsole()
         {
@@ -45,19 +53,49 @@ namespace FolderScanLib
             resultsLogger.LogResults(Results.ToString());
         }
 
-        private void GetUserInput()
+        private bool GetUserInput()
         {
-            
-            Console.WriteLine("Please enter the file path for folder 1: ");
+            int programMode = 1;
+            Console.WriteLine("***** Select desired program mode *****");
+            Console.WriteLine("  1) Hard Drive");
+            Console.WriteLine("  2) One Drive");
+            InsertNewLines(2);
+            Console.WriteLine("Enter 1 or 2 for desired program mode");
+            var programModeInput = Console.ReadKey();
+            if (!int.TryParse(programModeInput.KeyChar.ToString(), out programMode))
+            {
+                Console.WriteLine("\n\nIncorrect input. Exiting program");
+                return false;
+            }
+            if (programMode != 1 && programMode != 2)
+            {
+                Console.WriteLine("\n\nIncorrect input. Exiting program");
+                return false;
+            };
+            ProgramMode = (Mode)programMode;
+
+            Console.WriteLine("\n\nPlease enter the file path for folder 1: ");
             Folder1 = Console.ReadLine();
 
-            Console.WriteLine("Please enter the file path folr folder 2: ");
-            Folder2 = Console.ReadLine();            
+            if (ProgramMode == Mode.OneDrive)
+            {
+                Console.WriteLine("The second file path for folder 2 is OneDrive, no data entry required.");
+                Folder2 = String.Empty;
+            }
+            else
+            {
+                Console.WriteLine("Please enter the file path for folder 2: ");
+                Folder2 = Console.ReadLine();
+            }
+           
+
+            return true;
         }
 
         private void DoFolderScan()
-        {            
-            var missingFolders = new FolderScan().GetMissingFolders(Folder1, Folder2);
+        {
+            FolderScan = GetFolderScan();
+            var missingFolders = FolderScan.GetMissingFolders(Folder1, Folder2);
             Folder1Only = missingFolders.Item1;
             Folder2Only = missingFolders.Item2;
         }
@@ -105,6 +143,20 @@ namespace FolderScanLib
             else if (LoggingMechanism == Logging.File)
             {
                 return new ResultsFileLogger();
+            }
+
+            return null;
+        }
+
+        private IFolderScan GetFolderScan()
+        {
+            if (ProgramMode == Mode.HardDrive)
+            {
+                return new FolderScan();
+            }
+            else if (ProgramMode == Mode.OneDrive)
+            {
+                return new OneDriveFolderScan();
             }
 
             return null;

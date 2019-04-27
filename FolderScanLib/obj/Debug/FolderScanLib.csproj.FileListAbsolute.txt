@@ -4,3 +4,11 @@ C:\MyProjects\FolderScan\FolderScanLib\obj\Debug\FolderScanLib.csprojResolveAsse
 C:\MyProjects\FolderScan\FolderScanLib\obj\Debug\FolderScanLib.csproj.CoreCompileInputs.cache
 C:\MyProjects\FolderScan\FolderScanLib\obj\Debug\FolderScanLib.dll
 C:\MyProjects\FolderScan\FolderScanLib\obj\Debug\FolderScanLib.pdb
+C:\MyProjects\FolderScan\FolderScanLib\bin\Debug\Microsoft.Graph.Core.dll
+C:\MyProjects\FolderScan\FolderScanLib\bin\Debug\Microsoft.Graph.dll
+C:\MyProjects\FolderScan\FolderScanLib\bin\Debug\Microsoft.Identity.Client.dll
+C:\MyProjects\FolderScan\FolderScanLib\bin\Debug\Newtonsoft.Json.dll
+C:\MyProjects\FolderScan\FolderScanLib\bin\Debug\Microsoft.Graph.xml
+C:\MyProjects\FolderScan\FolderScanLib\bin\Debug\Microsoft.Graph.Core.xml
+C:\MyProjects\FolderScan\FolderScanLib\bin\Debug\Microsoft.Identity.Client.xml
+C:\MyProjects\FolderScan\FolderScanLib\bin\Debug\Newtonsoft.Json.xml
